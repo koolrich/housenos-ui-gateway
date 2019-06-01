@@ -1,0 +1,69 @@
+/build/
+logs
+target
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+housenos-gateway/*.iml
+housenos-gateway/*.ipr
+housenos-gateway/.idea
+housenos-gateway/*.iws
+housenos-gateway/build
+housenos-gateway/logs
+housenos-gateway/target
+
+housenos-ui/*.iml
+/housenos-ui/.idea
+housenos-ui/.idea
+housenos-ui/*.ipr
+housenos-ui/*.iws
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Spring Generated
+.springBeans
+
+# Eclipse Generated
+.classpath
+.project
+.settings/
+.metadata/
+target/
+
+# Front End Dependency Generated
+housenos-ui/.sass-cache/
+housenos-ui/bower_components/
+housenos-ui/dist/
+housenos-ui/node/
+housenos-ui/node_modules/
+housenos-ui/src/main/ui/node
+housenos-ui/src/main/ui/node_modules
+housenos-ui/npm-debug.log
+housenos-ui/.tscache/
+housenos-ui/scss/.tmp/
+housenos-ui/js/lib/
+housenos-ui/typings/
+housenos-ui/coverage/
+housenos-ui/build
+housenos-ui/workspace.xml
+housenos-ui/.idea/*.xml
+housenos-ui/target
