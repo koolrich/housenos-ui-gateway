@@ -13,7 +13,7 @@
 	<artifactId>housenos-gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>housenos-gateway</name>
-	<description>Housenos Gateway Project</description>
+	<description>API gateway project for Housenos</description>
 
 	<properties>
 		<java.version>1.8</java.version>

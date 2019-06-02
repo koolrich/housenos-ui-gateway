@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 
 	<name>housenos-parent</name>
-	<description>Gateway project for Housenos</description>
+	<description>API gateway and UI projects for Housenos</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
