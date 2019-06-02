@@ -57,6 +57,7 @@ housenos-ui/node/
 housenos-ui/node_modules/
 housenos-ui/src/main/ui/node
 housenos-ui/src/main/ui/node_modules
+housenos-ui/src/main/ui/build
 housenos-ui/npm-debug.log
 housenos-ui/.tscache/
 housenos-ui/scss/.tmp/
