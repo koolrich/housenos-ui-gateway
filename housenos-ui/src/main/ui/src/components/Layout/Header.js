@@ -4,6 +4,8 @@ import {
     Dropdown, DropdownMenu, DropdownItem
 } from 'reactstrap';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -34,7 +36,7 @@ class Header extends Component {
             <React.Fragment>
                 <Navbar expand="md" className="navbar-housenos">
                     <NavbarBrand className="mr-5" href="/">
-                        <img src="assets/images/housenos-logo.jpg" height="30" width="41" alt="Housenos" />
+                        <img src="assets/images/housenos-logo.jpg" height="35" width="45" alt="Housenos" />
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggleNav} />
 
@@ -42,22 +44,22 @@ class Header extends Component {
                         <Nav navbar>
                             <NavItem>
                                 <NavLink className="nav-link" to='/home'>
-                                    <i className="fa fa-fw fa-home" aria-hidden="true"></i>Dashboard
+                                    <FontAwesomeIcon icon="home" className="fa-fw" />Dashboard
                                 </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink className="nav-link" to='/aboutus'>
-                                    <i className="fa fa-fw fa-university" aria-hidden="true"></i>My Properties
+                                    <FontAwesomeIcon icon="university" className="fa-fw" />My Properties
                                     </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink className="nav-link" to='/menu'>
-                                    <i className="fa fa-fw fa-search-plus" aria-hidden="true"></i>Property Search
+                                    <FontAwesomeIcon icon="search" className="fa-fw" />Property Search
                                     </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink className="nav-link" to='/contactus'>
-                                    <i className="fa fa-fw fa-street-view" aria-hidden="true"></i>Viewings
+                                    <FontAwesomeIcon icon="street-view" className="fa-fw" />Viewings
                                     </NavLink>
                             </NavItem>
                         </Nav>
@@ -70,10 +72,10 @@ class Header extends Component {
                                     </div>
                                 </DropdownToggle>
                                 <DropdownMenu className="dropdown-menu-right">
-                                    <DropdownItem tag="a" href="/"><i className="fa fa-fw fa-user" aria-hidden="true"></i>Profile</DropdownItem>
-                                    <DropdownItem tag="a" href="/"><i className="fa fa-fw fa-cog" aria-hidden="true"></i>Settings</DropdownItem>
+                                    <DropdownItem tag="a" href="/"><FontAwesomeIcon icon="user" className="fa-fw"/>Profile</DropdownItem>
+                                    <DropdownItem tag="a" href="/"><FontAwesomeIcon icon="cog" className="fa-fw" />Settings</DropdownItem>
                                     <DropdownItem divider />
-                                    <DropdownItem tag="a" href="/"><i className="fa fa-fw fa-power-off" aria-hidden="true"></i>Logout</DropdownItem>
+                                    <DropdownItem tag="a" href="/"><FontAwesomeIcon icon="power-off" className="fa-fw" />Logout</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                         </Nav>
