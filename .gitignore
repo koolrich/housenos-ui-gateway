@@ -68,3 +68,4 @@ housenos-ui/build
 housenos-ui/workspace.xml
 housenos-ui/.idea/*.xml
 housenos-ui/target
+housenos-ui/src/main/ui/coverage

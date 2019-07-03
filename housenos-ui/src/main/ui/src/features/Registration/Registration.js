@@ -5,8 +5,59 @@ import {
 } from 'reactstrap';
 import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FEDERAL_STATES } from '../../repository/refdata/FederalStates';
+import SelectInput from '../../util/components/SelectInput'
 
 class Registration extends Component {
+
+    constructor() {
+        super();
+
+        this.state = {
+            formControls: {
+                federalState: {
+                    value: '',
+                    options: [{ value: '', display: 'Select your state' }].concat(FEDERAL_STATES.map(federalState => { return { value: federalState.name, display: federalState.name } }))
+                },
+                town: {
+                    value: '',
+                    options: []
+                }
+            },
+            townOptions: []
+        };
+
+        this.InputChangeHandler = this.InputChangeHandler.bind(this);
+    }
+
+    InputChangeHandler = event => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.setState({
+            formControls: {
+                ...this.state.formControls,
+                [name]: {
+                    ...this.state.formControls[name], value
+                }
+            }
+        });
+
+        if (name === 'federalState') {
+            const townsForSelectedState = this.getTownsForState(value);
+
+            this.setState({
+                townOptions: [{ value: '', display: 'Select your town' }].concat(townsForSelectedState.map(town => { return { value: town, display: town } }))
+            });
+        }
+    }
+
+    getTownsForState = selectedFederalState => {
+        if (selectedFederalState === '') {
+            return [];
+        }
+        return FEDERAL_STATES.filter(federalState => federalState.name === selectedFederalState)[0].towns;
+    }
 
     componentDidMount() {
         document.body.style.backgroundColor = "#0747A6";
@@ -14,7 +65,6 @@ class Registration extends Component {
 
     render() {
         return (
-
             <div className="container">
                 <header className="row justify-content-center register-title">
                     <img className="housenos-img" src="assets/images/housenos-logo.jpg" width="50" height="40" alt="" />
@@ -130,26 +180,28 @@ class Registration extends Component {
 
                                     <Row form>
                                         <Col md={6}>
-                                            <FormGroup>
-                                                <InputGroup>
-                                                    <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="city" /></InputGroupAddon>
-                                                    <Input type="text" aria-label="Enter your state" placeholder="State" />
-                                                </InputGroup>
-                                            </FormGroup>
+                                            <SelectInput name="federalState"
+                                                value={this.state.formControls.federalState.value}
+                                                options={this.state.formControls.federalState.options}
+                                                onChange={this.InputChangeHandler}
+                                                withIcon={true}
+                                                addonType="prepend"
+                                                icon="city"                                          />
                                         </Col>
 
                                         <Col md={6}>
-                                            <FormGroup>
-                                                <InputGroup>
-                                                    <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="city" /></InputGroupAddon>
-                                                    <Input type="text" aria-label="Enter your town" placeholder="Town" />
-                                                </InputGroup>
-                                            </FormGroup>
+                                            <SelectInput name="town"
+                                                value={this.state.formControls.town.value}
+                                                options={this.state.townOptions}
+                                                onChange={this.InputChangeHandler}
+                                                withIcon={true}
+                                                addonType="prepend"
+                                                icon="city"
+                                            />
                                         </Col>
                                     </Row>
                                     <FormGroup>
                                         <FormText>By signing up, you confirm that you've read and accepted our <a href="">User Notice</a> and <a href="">Privacy Policy</a></FormText>
-
                                     </FormGroup>
                                     <FormGroup>
                                         <Button color="primary" block>Sign up</Button>
