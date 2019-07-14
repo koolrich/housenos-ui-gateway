@@ -1,22 +1,23 @@
 import InputValidator from './InputValidator';
 
-describe('Input validator', () => {
+describe('Input validator tests', () => {
 
-    test('A field is required with a value', () => {
-        expect(InputValidator('First name', 'Joe', {isRequired: true})).toBeFalsy();
+    describe('required validator', () => {
+        test('A field is required and a value is passed', () => {
+            expect(InputValidator('First name', 'Joe', {isRequired: true})).toBeFalsy();
+        });
+    
+        test('A field is required and no value is passed', () => {
+            expect(InputValidator('First name', '', {isRequired: true})).toBeTruthy();
+        });
+    
+        test('A field is not required but a value is passed', () => {
+            expect(InputValidator('First name', 'Joe', {})).toBeFalsy();
+        });
+    
+        test('A field is not required and no value is passed', () => {
+            expect(InputValidator('First name', '', {})).toBeFalsy();
+        });
     });
-
-    test('A field is required without a value', () => {
-        expect(InputValidator('First name', '', {isRequired: true})).toBeTruthy();
-    });
-
-    test('A field is not required with a value', () => {
-        expect(InputValidator('First name', 'Joe', {})).toBeFalsy();
-    });
-
-    test('A field is not required without a value', () => {
-        expect(InputValidator('First name', '', {})).toBeFalsy();
-    });
-
-})
+});
 

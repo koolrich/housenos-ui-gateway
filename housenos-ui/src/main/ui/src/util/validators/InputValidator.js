@@ -9,7 +9,7 @@ const InputValidator = (inputName, inputValue, rules) => {
                 }
                 break;
             
-            default: error='a';
+            default: error='';
         }
     }
 

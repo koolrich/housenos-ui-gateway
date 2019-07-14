@@ -4,6 +4,6 @@ import { shallow } from 'enzyme';
 
 describe('Registration tests', () => {
     it('renders without crashing', () => {       
-        const selectInputComponent = shallow(<Registration />);
+        const registrationPage = shallow(<Registration />);
     });
 })

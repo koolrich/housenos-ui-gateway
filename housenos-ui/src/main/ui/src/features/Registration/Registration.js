@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {
-    Card, CardBody, CardTitle, Form, FormGroup, FormFeedback, Row, Col, Input, InputGroup, InputGroupAddon,
+    Card, CardBody, CardTitle, Form, FormGroup, FormFeedback, Row, Col,
     FormText, Button, Label
 } from 'reactstrap';
 import './index.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FEDERAL_STATES } from '../../repository/refdata/FederalStates';
-import SelectInput from '../../util/components/SelectInput'
+import SelectInput from '../../util/components/SelectInput';
+import CommonInput from '../../util/components/CommonInput';
+import RadioInput from '../../util/components/RadioInput';
 
 class Registration extends Component {
 
@@ -15,22 +16,53 @@ class Registration extends Component {
 
         this.state = {
             formControls: {
+                firstName: {
+                    value: ''
+                },
+                lastName: {
+                    value: ''
+                },
+                email: {
+                    value: ''
+                },
+                password: {
+                    value: ''
+                },
+                confirmPassword: {
+                    value: ''
+                },
+                phone: {
+                    value: ''
+                },
+                businessName: {
+                    value: ''
+                },
+                address1: {
+                    value: ''
+                },
+                address2: {
+                    value: ''
+                },
                 federalState: {
                     value: '',
                     options: [{ value: '', display: 'Select your state' }].concat(FEDERAL_STATES.map(federalState => { return { value: federalState.name, display: federalState.name } }))
                 },
                 town: {
-                    value: '',
-                    options: []
+                    value: ''
+                },
+                role: {
+                    value:'',
+                    options: [{ value: 'User', display: 'User' }, { value: 'Agent', display: 'Agent' }]
                 }
             },
-            townOptions: []
+            townOptions: [],
+            hideLabel: true
         };
 
-        this.InputChangeHandler = this.InputChangeHandler.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
-    InputChangeHandler = event => {
+    onChange = event => {
         const name = event.target.name;
         const value = event.target.value;
 
@@ -78,112 +110,111 @@ class Registration extends Component {
                                 <CardTitle className="text-center">Sign up for your account</CardTitle>
                                 <Form>
                                     <Row form>
-                                        <Col>
-                                            <p>I am registering as</p>
+                                       <Col sm={4}>
+                                           <Label for="role">I am registering as</Label>
+                                       </Col>
+                                        <Col sm={8}>  
+                                        <RadioInput name="role" displayInline={true}
+                                        onChange={this.onChange} 
+                                        options={this.state.formControls.role.options}
+                                        selectedOption={this.state.formControls.role.selectedOption}/> 
+                                        
                                         </Col>
-                                        <Col>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="radio" id="role" name="role" /> User
-                                                </Label>
-                                            </FormGroup>
-                                        </Col>
-
-                                        <Col>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="radio" id="role" name="role" /> Agent
-                                                </Label>
-                                            </FormGroup>
-                                        </Col>
-
                                     </Row>
 
                                     <Row form>
                                         <Col md={6}>
-                                            <FormGroup>
-                                                <InputGroup>
-                                                    <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="user" /></InputGroupAddon>
-                                                    <Input type="text" aria-label="Enter first name" placeholder="First name" />
-                                                </InputGroup>
-                                            </FormGroup>
+                                            <CommonInput type="text" name="firstName" value={this.state.formControls.firstName.value}
+                                                placeholder="First name"
+                                                title="First name"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="user"/>
                                         </Col>
 
                                         <Col md={6}>
-                                            <FormGroup>
-                                                <InputGroup>
-                                                    <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="user" /></InputGroupAddon>
-                                                    <Input type="text" aria-label="Enter last name" placeholder="Last name" />
-                                                </InputGroup>
-                                            </FormGroup>
+                                        <CommonInput type="text" name="lastName" value={this.state.formControls.lastName.value}
+                                                placeholder="Last name"
+                                                title="Last name"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="user"/>
                                         </Col>
 
                                     </Row>
 
-                                    <FormGroup>
-                                        <InputGroup>
-                                            <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="envelope" /></InputGroupAddon>
-                                            <Input type="text" aria-label="Enter your email" placeholder="Email" />
-                                            <Col sm={12}>
-                                                <FormText>We'll never share your email with anyone else</FormText>
-                                            </Col>
-                                        </InputGroup>
-                                    </FormGroup>
+                                    <CommonInput type="email" name="email" value={this.state.formControls.email.value}
+                                                placeholder="Email address"
+                                                title="Email"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="envelope"/>
 
                                     <Row form>
                                         <Col md={6}>
-                                            <FormGroup>
-                                                <InputGroup>
-                                                    <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="lock" /></InputGroupAddon>
-                                                    <Input type="password" aria-label="Enter your password" placeholder="Password" />
-                                                </InputGroup>
-                                            </FormGroup>
+                                        <CommonInput type="password" name="password" value={this.state.formControls.password.value}
+                                                placeholder="Password"
+                                                title="Password"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="lock"/>
                                         </Col>
 
                                         <Col md={6}>
-                                            <FormGroup>
-                                                <InputGroup>
-                                                    <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="lock" /></InputGroupAddon>
-                                                    <Input type="text" aria-label="Confirm your password" placeholder="Confirm password" />
-                                                </InputGroup>
-                                            </FormGroup>
+                                        <CommonInput type="password" name="confirmPassword" value={this.state.formControls.confirmPassword.value}
+                                                placeholder="Confirm password"
+                                                title="Password"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="lock"/>
                                         </Col>
                                     </Row>
 
-                                    <FormGroup>
-                                        <InputGroup>
-                                            <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="phone" /></InputGroupAddon>
-                                            <Input type="tel" aria-label="Enter your phone number" placeholder="Phone" />
-                                        </InputGroup>
-                                    </FormGroup>
+                                    <CommonInput type="tel" name="phone" value={this.state.formControls.phone.value}
+                                                placeholder="Phone number"
+                                                title="Phone number"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="phone"/>
 
-                                    <FormGroup>
-                                        <InputGroup>
-                                            <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="briefcase" /></InputGroupAddon>
-                                            <Input type="tel" aria-label="Enter your business name" placeholder="Business name" />
-                                        </InputGroup>
-                                    </FormGroup>
 
-                                    <FormGroup>
-                                        <InputGroup>
-                                            <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="address-card" /></InputGroupAddon>
-                                            <Input type="tel" aria-label="Enter your address1" placeholder="Address 1" />
-                                        </InputGroup>
-                                    </FormGroup>
+                                    <CommonInput type="text" name="businessName" value={this.state.formControls.businessName.value}
+                                                placeholder="Company name"
+                                                title="Company name"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="briefcase"/>   
 
-                                    <FormGroup>
-                                        <InputGroup>
-                                            <InputGroupAddon className="input-group-text" addonType="prepend"><FontAwesomeIcon icon="address-card" /></InputGroupAddon>
-                                            <Input type="tel" aria-label="Enter your address line 2" placeholder="Address 2" />
-                                        </InputGroup>
-                                    </FormGroup>
+                                    <CommonInput type="text" name="address1" value={this.state.formControls.address1.value}
+                                                placeholder="Address 1"
+                                                title="Address 1"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="address-card"/>
+
+                                    <CommonInput type="text" name="address2" value={this.state.formControls.address2.value}
+                                                placeholder="Address 2"
+                                                title="Address 2"
+                                                hideLabel={this.state.hideLabel}
+                                                onChange={this.onChange}
+                                                addonType="prepend"
+                                                icon="address-card"/>
+
 
                                     <Row form>
                                         <Col md={6}>
                                             <SelectInput name="federalState"
                                                 value={this.state.formControls.federalState.value}
                                                 options={this.state.formControls.federalState.options}
-                                                onChange={this.InputChangeHandler}
+                                                onChange={this.onChange}
                                                 withIcon={true}
                                                 addonType="prepend"
                                                 icon="city"                                          />
@@ -193,7 +224,7 @@ class Registration extends Component {
                                             <SelectInput name="town"
                                                 value={this.state.formControls.town.value}
                                                 options={this.state.townOptions}
-                                                onChange={this.InputChangeHandler}
+                                                onChange={this.onChange}
                                                 withIcon={true}
                                                 addonType="prepend"
                                                 icon="city"

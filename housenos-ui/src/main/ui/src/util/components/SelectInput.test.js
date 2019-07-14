@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 describe('SelectInput tests', () => {
     const props = {
-        withIcon: true, addonType: 'prepend', icon: "city", value: 'Joe', onChange: () => { },
+        withIcon: true, addonType: 'prepend', icon: "city", value: 'Joe', onChange: jest.fn(),
         name: 'name', options: [{ value: 'test1', display: 'test1' }, { value: 'test2', display: 'test2' }]
     }
 
