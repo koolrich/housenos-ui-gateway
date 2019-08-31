@@ -1,15 +1,19 @@
-const InputValidator = (inputName, inputValue, rules) => {
+const validate = (inputValue, rules) => {
     let error = '';
 
     for (let rule in rules) {
         switch (rule) {
-            case 'isRequired':
+            case 'isRequired': {
                 if (!requiredValidator(inputValue)){
-                    error = 'Please enter your ' + inputName; 
+                    error = 'This field is required'; 
+                    return error;
                 }
-                break;
-            
-            default: error='';
+            }
+
+            default: {
+                error='';
+                return error;
+            } 
         }
     }
 
@@ -20,4 +24,4 @@ const requiredValidator = value => {
     return value.trim() !== '';	
 }
 
-export default InputValidator;
+export default validate;

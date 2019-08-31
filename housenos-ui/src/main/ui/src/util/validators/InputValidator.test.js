@@ -1,22 +1,22 @@
-import InputValidator from './InputValidator';
+import validate from './InputValidator';
 
 describe('Input validator tests', () => {
 
     describe('required validator', () => {
         test('A field is required and a value is passed', () => {
-            expect(InputValidator('First name', 'Joe', {isRequired: true})).toBeFalsy();
+            expect(validate('Joe', {isRequired: true})).toBeFalsy();
         });
     
         test('A field is required and no value is passed', () => {
-            expect(InputValidator('First name', '', {isRequired: true})).toBeTruthy();
+            expect(validate('', {isRequired: true})).toBeTruthy();
         });
     
         test('A field is not required but a value is passed', () => {
-            expect(InputValidator('First name', 'Joe', {})).toBeFalsy();
+            expect(validate('Joe', {})).toBeFalsy();
         });
     
         test('A field is not required and no value is passed', () => {
-            expect(InputValidator('First name', '', {})).toBeFalsy();
+            expect(validate('', {})).toBeFalsy();
         });
     });
 });

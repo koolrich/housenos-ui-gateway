@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import {
-    Card, CardBody, CardTitle, Form, FormGroup, FormFeedback, Row, Col,
-    FormText, Button, Label
+    Card, CardBody, CardTitle, Form, FormGroup, Row, Col, FormText, Label, Input
 } from 'reactstrap';
 import './index.css';
 import { FEDERAL_STATES } from '../../repository/refdata/FederalStates';
 import SelectInput from '../../util/components/SelectInput';
 import CommonInput from '../../util/components/CommonInput';
 import RadioInput from '../../util/components/RadioInput';
+import CommonButton from '../../util/components/CommonButton';
+import Checkbox from '../../util/components/Checkbox';
+
+import validate from '../../util/validators/InputValidator';
 
 class Registration extends Component {
 
@@ -17,78 +20,121 @@ class Registration extends Component {
         this.state = {
             formControls: {
                 firstName: {
-                    value: ''
+                    value: '', valid: true, touched: false, errorMessage: '', hideable: true,
+                    validationRules: {
+                        isRequired: true,
+                        minLength: 25
+                    }
                 },
                 lastName: {
-                    value: ''
+                    value: '', valid: true, touched: false, errorMessage: '', hideable: true,
+                    validationRules: {
+                        isRequired: true,
+                        minLength: 25
+                    }
                 },
                 email: {
-                    value: ''
+                    value: '', valid: true, touched: false, errorMessage: '', hideable: false,
+                    validationRules: {
+                        isRequired: true
+                    }
                 },
                 password: {
-                    value: ''
-                },
-                confirmPassword: {
-                    value: ''
+                    value: '', valid: true, touched: false, errorMessage: '', hideable: false,
+                    validationRules: {
+                        isRequired: true
+                    }
                 },
                 phone: {
-                    value: ''
-                },
-                businessName: {
-                    value: ''
-                },
-                address1: {
-                    value: ''
-                },
-                address2: {
-                    value: ''
-                },
-                federalState: {
-                    value: '',
-                    options: [{ value: '', display: 'Select your state' }].concat(FEDERAL_STATES.map(federalState => { return { value: federalState.name, display: federalState.name } }))
-                },
-                town: {
-                    value: ''
+                    value: '', valid: true, touched: false, errorMessage: '', hideable: true,
+                    validationRules: {
+                        isRequired: true
+                    }
                 },
                 role: {
-                    value:'',
-                    options: [{ value: 'User', display: 'User' }, { value: 'Agent', display: 'Agent' }]
+                    value: '', valid: true, touched: false, errorMessage: '', hideable: true,
+                    validationRules: {
+                        isRequired: true
+                    },
+                    options: [{ value: '', display: 'Select your professional category' },
+                    { value: 'Landlord', display: 'Landlord' },
+                    { value: 'Agent', display: 'Real Estate Agent/Broker' }]
                 }
             },
-            townOptions: [],
-            hideLabel: true
+            hideLabel: true,
+            displayProfessionalFields: false
         };
 
         this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.toggleDisplayProfessionalFields = this.toggleDisplayProfessionalFields.bind(this);
     }
 
     onChange = event => {
         const name = event.target.name;
         const value = event.target.value;
 
+        const updatedFormControls = {
+            ...this.state.formControls
+        };
+        const updatedFormControl = {
+            ...updatedFormControls[name]
+        };
+        updatedFormControl.value = value;
+        updatedFormControl.touched = true;
+
+        const validatedFormControl = this.validateInput(value, updatedFormControl);
+
+        updatedFormControls[name] = validatedFormControl;
+
         this.setState({
-            formControls: {
-                ...this.state.formControls,
-                [name]: {
-                    ...this.state.formControls[name], value
-                }
-            }
+            formControls: updatedFormControls
         });
-
-        if (name === 'federalState') {
-            const townsForSelectedState = this.getTownsForState(value);
-
-            this.setState({
-                townOptions: [{ value: '', display: 'Select your town' }].concat(townsForSelectedState.map(town => { return { value: town, display: town } }))
-            });
-        }
     }
 
-    getTownsForState = selectedFederalState => {
-        if (selectedFederalState === '') {
-            return [];
+    onSubmit = (event) => {
+        const formControls = {
+            ...this.state.formControls
+        };
+
+        let isFormValid = true;
+
+        for (let control in formControls) {
+            const formControl = formControls[control];
+            if (!formControl.hideable || (formControl.hideable && this.state.displayProfessionalFields)) {
+                const validatedFormControl = this.validateInput(formControl.value, formControl)
+                formControls[control] = validatedFormControl;
+
+                isFormValid = formControls[control].valid && isFormValid;
+            }
         }
-        return FEDERAL_STATES.filter(federalState => federalState.name === selectedFederalState)[0].towns;
+
+        this.setState({
+            formControls: formControls
+        });
+
+        console.log('Is Form Valid: ' + isFormValid);
+        //console.log(JSON.stringify(this.state.formControls));
+        event.preventDefault();
+    }
+
+    validateInput = (value, formControl) => {
+        const errorMessage = validate(value, formControl.validationRules)
+
+        if (errorMessage) {
+            formControl.valid = false;
+            formControl.errorMessage = errorMessage;
+        } else {
+            formControl.valid = true;
+        }
+
+        return formControl;
+    }
+
+    toggleDisplayProfessionalFields = (event) => {
+        this.setState({
+            displayProfessionalFields: event.target.checked
+        });
     }
 
     componentDidMount() {
@@ -109,134 +155,93 @@ class Registration extends Component {
                             <CardBody>
                                 <CardTitle className="text-center">Sign up for your account</CardTitle>
                                 <Form>
-                                    <Row form>
-                                       <Col sm={4}>
-                                           <Label for="role">I am registering as</Label>
-                                       </Col>
-                                        <Col sm={8}>  
-                                        <RadioInput name="role" displayInline={true}
-                                        onChange={this.onChange} 
-                                        options={this.state.formControls.role.options}
-                                        selectedOption={this.state.formControls.role.selectedOption}/> 
-                                        
-                                        </Col>
-                                    </Row>
-
-                                    <Row form>
-                                        <Col md={6}>
-                                            <CommonInput type="text" name="firstName" value={this.state.formControls.firstName.value}
-                                                placeholder="First name"
-                                                title="First name"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="user"/>
-                                        </Col>
-
-                                        <Col md={6}>
-                                        <CommonInput type="text" name="lastName" value={this.state.formControls.lastName.value}
-                                                placeholder="Last name"
-                                                title="Last name"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="user"/>
-                                        </Col>
-
-                                    </Row>
 
                                     <CommonInput type="email" name="email" value={this.state.formControls.email.value}
-                                                placeholder="Email address"
-                                                title="Email"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="envelope"/>
+                                        placeholder="Email address"
+                                        title="Email"
+                                        hideLabel={this.state.hideLabel}
+                                        onChange={this.onChange}
+                                        addonType="prepend"
+                                        icon="envelope"
+                                        valid={this.state.formControls.email.valid}
+                                        errorMessage={this.state.formControls.email.errorMessage}
+                                    />
 
-                                    <Row form>
-                                        <Col md={6}>
-                                        <CommonInput type="password" name="password" value={this.state.formControls.password.value}
-                                                placeholder="Password"
-                                                title="Password"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="lock"/>
-                                        </Col>
+                                    <CommonInput type="password" name="password" value={this.state.formControls.password.value}
+                                        placeholder="Password"
+                                        title="Password"
+                                        hideLabel={this.state.hideLabel}
+                                        onChange={this.onChange}
+                                        addonType="prepend"
+                                        icon="lock"
+                                        valid={this.state.formControls.password.valid}
+                                        errorMessage={this.state.formControls.password.errorMessage}
+                                    />
 
-                                        <Col md={6}>
-                                        <CommonInput type="password" name="confirmPassword" value={this.state.formControls.confirmPassword.value}
-                                                placeholder="Confirm password"
-                                                title="Password"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="lock"/>
-                                        </Col>
-                                    </Row>
+                                    <Checkbox name="professional" value={this.state.showProfessional}
+                                        title="I am a landlord or industry professional"
+                                        onChange={this.toggleDisplayProfessionalFields} />
 
-                                    <CommonInput type="tel" name="phone" value={this.state.formControls.phone.value}
-                                                placeholder="Phone number"
-                                                title="Phone number"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="phone"/>
+                                    <div className={!this.state.displayProfessionalFields ? 'hidden' : ''}>
+                                        <SelectInput name="role"
+                                            value={this.state.formControls.role.value}
+                                            options={this.state.formControls.role.options}
+                                            onChange={this.onChange}
+                                            withIcon={true}
+                                            addonType="prepend"
+                                            icon="id-card"
+                                            valid={this.state.formControls.role.valid}
+                                            errorMessage={this.state.formControls.role.errorMessage}
+                                        />
+                                        <Row form>
+                                            <Col md={6}>
+                                                <CommonInput type="text" name="firstName" value={this.state.formControls.firstName.value}
+                                                    placeholder="First name"
+                                                    title="First name"
+                                                    hideLabel={this.state.hideLabel}
+                                                    onChange={this.onChange}
+                                                    addonType="prepend"
+                                                    icon="user"
+                                                    valid={this.state.formControls.firstName.valid}
+                                                    errorMessage={this.state.formControls.firstName.errorMessage}
+                                                />
+                                            </Col>
+
+                                            <Col md={6}>
+                                                <CommonInput type="text" name="lastName" value={this.state.formControls.lastName.value}
+                                                    placeholder="Last name"
+                                                    title="Last name"
+                                                    hideLabel={this.state.hideLabel}
+                                                    onChange={this.onChange}
+                                                    addonType="prepend"
+                                                    icon="user"
+                                                    valid={this.state.formControls.lastName.valid}
+                                                    errorMessage={this.state.formControls.lastName.errorMessage}
+                                                />
+                                            </Col>
+
+                                        </Row>
+
+                                        <CommonInput type="tel" name="phone" value={this.state.formControls.phone.value}
+                                            placeholder="Phone number"
+                                            title="Phone number"
+                                            hideLabel={this.state.hideLabel}
+                                            onChange={this.onChange}
+                                            addonType="prepend"
+                                            icon="phone"
+                                            valid={this.state.formControls.phone.valid}
+                                            errorMessage={this.state.formControls.phone.errorMessage}
+                                        />
+
+                                    </div>
 
 
-                                    <CommonInput type="text" name="businessName" value={this.state.formControls.businessName.value}
-                                                placeholder="Company name"
-                                                title="Company name"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="briefcase"/>   
-
-                                    <CommonInput type="text" name="address1" value={this.state.formControls.address1.value}
-                                                placeholder="Address 1"
-                                                title="Address 1"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="address-card"/>
-
-                                    <CommonInput type="text" name="address2" value={this.state.formControls.address2.value}
-                                                placeholder="Address 2"
-                                                title="Address 2"
-                                                hideLabel={this.state.hideLabel}
-                                                onChange={this.onChange}
-                                                addonType="prepend"
-                                                icon="address-card"/>
-
-
-                                    <Row form>
-                                        <Col md={6}>
-                                            <SelectInput name="federalState"
-                                                value={this.state.formControls.federalState.value}
-                                                options={this.state.formControls.federalState.options}
-                                                onChange={this.onChange}
-                                                withIcon={true}
-                                                addonType="prepend"
-                                                icon="city"                                          />
-                                        </Col>
-
-                                        <Col md={6}>
-                                            <SelectInput name="town"
-                                                value={this.state.formControls.town.value}
-                                                options={this.state.townOptions}
-                                                onChange={this.onChange}
-                                                withIcon={true}
-                                                addonType="prepend"
-                                                icon="city"
-                                            />
-                                        </Col>
-                                    </Row>
                                     <FormGroup>
                                         <FormText>By signing up, you confirm that you've read and accepted our <a href="">User Notice</a> and <a href="">Privacy Policy</a></FormText>
                                     </FormGroup>
-                                    <FormGroup>
-                                        <Button color="primary" block>Sign up</Button>
-                                    </FormGroup>
+
+                                    <CommonButton color="primary" block onClick={this.onSubmit}>Sign up</CommonButton>
+
                                 </Form>
                             </CardBody>
 

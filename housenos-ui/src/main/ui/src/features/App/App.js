@@ -2,14 +2,14 @@ import React from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faUser, faAt, faLock, faPhone, faEnvelope, faAddressCard, faBriefcase, faCity,
-  faHome, faUniversity, faSearch, faStreetView, faCog, faPowerOff
+  faHome, faUniversity, faSearch, faStreetView, faCog, faPowerOff, faIdCard
 } from '@fortawesome/free-solid-svg-icons'
 import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
 import { Registration } from '../Registration';
 import { Layout } from '../Layout';
 
 library.add(faUser, faAt, faLock, faPhone, faEnvelope, faAddressCard, faBriefcase, faCity, faHome,
-  faUniversity, faSearch, faStreetView, faCog, faPowerOff)
+  faUniversity, faSearch, faStreetView, faCog, faPowerOff, faIdCard)
 
 function App() {
   return (

@@ -1,12 +1,15 @@
 import React from 'react';
-import { Input, InputGroup, InputGroupAddon, FormGroup, Label } from 'reactstrap';
+import { Input, InputGroup, InputGroupAddon, FormGroup, Label, FormFeedback, FormText } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 function renderInput(props) {
     return (
-        <Input type={props.type} name={props.name} id={props.name} value={props.value} placeholder={props.placeholder}
-            onChange={props.onChange} />
+        <React.Fragment>
+            <Input type={props.type} name={props.name} id={props.name} value={props.value} placeholder={props.placeholder}
+                onChange={props.onChange} invalid={props.valid === false ? true : false} />
+            <FormFeedback>{props.errorMessage}</FormFeedback>
+        </React.Fragment>
     );
 }
 
@@ -41,8 +44,10 @@ CommonInput.propTypes = {
     onChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
-    title: PropTypes.string.isRequired, 
-    hideLabel: PropTypes.bool.isRequired
+    title: PropTypes.string,
+    hideLabel: PropTypes.bool.isRequired,
+    valid: PropTypes.bool,
+    errorMessage: PropTypes.string
 }
 
 export default CommonInput;
