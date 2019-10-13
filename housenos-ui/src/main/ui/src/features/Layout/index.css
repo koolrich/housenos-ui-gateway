@@ -93,3 +93,6 @@
     color: #0747A6;
     font-weight: bold;
   }
+  .dropdown-menu[x-placement^=bottom], .dropdown-menu[x-placement^=left], .dropdown-menu[x-placement^=right], .dropdown-menu[x-placement^=top] {
+    right: 0;
+  }
