@@ -1,0 +1,21 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "tester1@test.com",
+            "password": "password",
+            "firstName": "Tester",
+            "lastName": "User",
+            "roles":"ROLE_USER"
+        },
+
+        {
+            "id": 2,
+            "username": "tester2@test.com",
+            "password": "password",
+            "firstName": "Tester",
+            "lastName": "Agent",
+            "roles":"ROLE_AGENT, ROLE_USER"
+        }
+    ]
+}

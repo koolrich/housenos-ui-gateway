@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, FormGroup, Label } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-const RadioInput = (props) => {
+const Radio = (props) => {
     return (
         <React.Fragment>
             <FormGroup>
@@ -21,7 +21,7 @@ const RadioInput = (props) => {
     );
 }
 
-RadioInput.propTypes = {
+Radio.propTypes = {
     onChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     displayInline: PropTypes.bool,
@@ -29,4 +29,4 @@ RadioInput.propTypes = {
     selectedOption: PropTypes.any
 }
 
-export default RadioInput;
+export default Radio;

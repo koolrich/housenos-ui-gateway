@@ -10,11 +10,12 @@ const CommonButton = (props) => {
         className = '',
         block = false,
         size,
+        disabled = false,
         children
     } = props;
 
     return (
-        <Button color={color} className={className} block={block} onClick={onClick} size={size}>
+        <Button color={color} className={className} block={block} onClick={onClick} size={size} disabled={disabled}> 
             {children}
         </Button>
     );
@@ -25,7 +26,8 @@ CommonButton.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
     size: PropTypes.string,
-    block: PropTypes.bool
+    block: PropTypes.bool,
+    disabled: PropTypes.bool
 }
 
 export default CommonButton;
