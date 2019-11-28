@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import {
-    Card, CardBody, CardTitle, Form, FormGroup, Row, Col, FormText, Label, Input
+    Card, CardBody, CardTitle, Form, FormGroup, Row, Col, FormText, Button
 } from 'reactstrap';
-import './index.css';
-import { FEDERAL_STATES } from '../../repository/refdata/FederalStates';
-import SelectInput from '../../util/components/SelectInput';
-import CommonInput from '../../util/components/CommonInput';
-import RadioInput from '../../util/components/RadioInput';
-import CommonButton from '../../util/components/CommonButton';
-import Checkbox from '../../util/components/Checkbox';
 
-import validate from '../../util/validators/InputValidator';
+import './index.css';
+import { FEDERAL_STATES } from '../../service/refdata/FederalStates';
+import Select from '../../util/components/Select';
+import Email from '../../util/components/Email';
+import Password from '../../util/components/Password';
+import Telephone from '../../util/components/Telephone';
+import Text from '../../util/components/Text';
+import Checkbox from '../../util/components/Checkbox';
+import AlertMessage from '../../util/components/Alert';
+
+import { validate } from '../../util/validators/InputValidator';
+import UserRepository from '../../service/repository/UserRepository';
 
 class Registration extends Component {
 
@@ -36,7 +40,8 @@ class Registration extends Component {
                 email: {
                     value: '', valid: true, touched: false, errorMessage: '', hideable: false,
                     validationRules: {
-                        isRequired: true
+                        isRequired: true,
+                        isEmail: true
                     }
                 },
                 password: {
@@ -62,12 +67,16 @@ class Registration extends Component {
                 }
             },
             hideLabel: true,
-            displayProfessionalFields: false
+            displayProfessionalFields: false,
+            formErrorMessage: '',
+            showAlert: false
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.toggleDisplayProfessionalFields = this.toggleDisplayProfessionalFields.bind(this);
+        this.onDismissAlert = this.onDismissAlert.bind(this);
+        this.userRepository = new UserRepository();
     }
 
     onChange = event => {
@@ -93,6 +102,8 @@ class Registration extends Component {
     }
 
     onSubmit = (event) => {
+        event.preventDefault();
+
         const formControls = {
             ...this.state.formControls
         };
@@ -104,7 +115,6 @@ class Registration extends Component {
             if (!formControl.hideable || (formControl.hideable && this.state.displayProfessionalFields)) {
                 const validatedFormControl = this.validateInput(formControl.value, formControl)
                 formControls[control] = validatedFormControl;
-
                 isFormValid = formControls[control].valid && isFormValid;
             }
         }
@@ -113,9 +123,29 @@ class Registration extends Component {
             formControls: formControls
         });
 
-        console.log('Is Form Valid: ' + isFormValid);
-        //console.log(JSON.stringify(this.state.formControls));
-        event.preventDefault();
+        if (isFormValid) {
+
+            const user = {
+                email: formControls.email.value,
+                password: formControls.password.value,
+                firstName: formControls.firstName.value,
+                lastName: formControls.lastName.value,
+                role: formControls.role.value
+            }
+
+            this.userRepository.registerUser(user).then(response => {
+                console.log(response.data)
+            })
+                .catch(error => {
+                    console.log(error.response.data);
+                    this.setState({
+                        formErrorMessage: error.response.data.detail,
+                        showAlert: true
+                    });
+                });
+
+        }
+
     }
 
     validateInput = (value, formControl) => {
@@ -137,6 +167,12 @@ class Registration extends Component {
         });
     }
 
+    onDismissAlert = () => {
+        this.setState({
+            showAlert: false
+        });
+    }
+
     componentDidMount() {
         document.body.style.backgroundColor = "#0747A6";
     }
@@ -155,8 +191,9 @@ class Registration extends Component {
                             <CardBody>
                                 <CardTitle className="text-center">Sign up for your account</CardTitle>
                                 <Form>
+                                    <AlertMessage type="danger" visible={this.state.showAlert} onDismiss={this.onDismissAlert} errorMessage={this.state.formErrorMessage} />
 
-                                    <CommonInput type="email" name="email" value={this.state.formControls.email.value}
+                                    <Email name="email" value={this.state.formControls.email.value}
                                         placeholder="Email address"
                                         title="Email"
                                         hideLabel={this.state.hideLabel}
@@ -167,7 +204,7 @@ class Registration extends Component {
                                         errorMessage={this.state.formControls.email.errorMessage}
                                     />
 
-                                    <CommonInput type="password" name="password" value={this.state.formControls.password.value}
+                                    <Password name="password" value={this.state.formControls.password.value}
                                         placeholder="Password"
                                         title="Password"
                                         hideLabel={this.state.hideLabel}
@@ -183,7 +220,7 @@ class Registration extends Component {
                                         onChange={this.toggleDisplayProfessionalFields} />
 
                                     <div className={!this.state.displayProfessionalFields ? 'hidden' : ''}>
-                                        <SelectInput name="role"
+                                        <Select name="role"
                                             value={this.state.formControls.role.value}
                                             options={this.state.formControls.role.options}
                                             onChange={this.onChange}
@@ -195,7 +232,7 @@ class Registration extends Component {
                                         />
                                         <Row form>
                                             <Col md={6}>
-                                                <CommonInput type="text" name="firstName" value={this.state.formControls.firstName.value}
+                                                <Text name="firstName" value={this.state.formControls.firstName.value}
                                                     placeholder="First name"
                                                     title="First name"
                                                     hideLabel={this.state.hideLabel}
@@ -208,7 +245,7 @@ class Registration extends Component {
                                             </Col>
 
                                             <Col md={6}>
-                                                <CommonInput type="text" name="lastName" value={this.state.formControls.lastName.value}
+                                                <Text name="lastName" value={this.state.formControls.lastName.value}
                                                     placeholder="Last name"
                                                     title="Last name"
                                                     hideLabel={this.state.hideLabel}
@@ -222,7 +259,7 @@ class Registration extends Component {
 
                                         </Row>
 
-                                        <CommonInput type="tel" name="phone" value={this.state.formControls.phone.value}
+                                        <Telephone name="phone" value={this.state.formControls.phone.value}
                                             placeholder="Phone number"
                                             title="Phone number"
                                             hideLabel={this.state.hideLabel}
@@ -235,12 +272,11 @@ class Registration extends Component {
 
                                     </div>
 
-
                                     <FormGroup>
                                         <FormText>By signing up, you confirm that you've read and accepted our <a href="">User Notice</a> and <a href="">Privacy Policy</a></FormText>
                                     </FormGroup>
 
-                                    <CommonButton color="primary" block onClick={this.onSubmit}>Sign up</CommonButton>
+                                    <Button color="primary" block onClick={this.onSubmit}>Sign up</Button>
 
                                 </Form>
                             </CardBody>

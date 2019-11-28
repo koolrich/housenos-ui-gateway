@@ -96,3 +96,8 @@
   .dropdown-menu[x-placement^=bottom], .dropdown-menu[x-placement^=left], .dropdown-menu[x-placement^=right], .dropdown-menu[x-placement^=top] {
     right: 0;
   }
+
+  .brand-title {
+    vertical-align: middle;
+  }
+  

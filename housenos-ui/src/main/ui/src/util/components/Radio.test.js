@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import RadioInput from './RadioInput';
+import Radio from './Radio';
 
 describe('Radio input tests', () => {
     const props = {
@@ -10,18 +10,18 @@ describe('Radio input tests', () => {
         displayInline: false
     }
 
-    let mountedRadioInputWrapper;
+    let mountedRadioWrapper;
     const radioInputWrapper = () => {
-        if (!mountedRadioInputWrapper) {
-            mountedRadioInputWrapper = shallow(
-                <RadioInput {...props} />
+        if (!mountedRadioWrapper) {
+            mountedRadioWrapper = shallow(
+                <Radio {...props} />
             );
         }
-        return mountedRadioInputWrapper;
+        return mountedRadioWrapper;
     }
 
     beforeEach(() => {
-        mountedRadioInputWrapper = undefined;
+        mountedRadioWrapper = undefined;
     });
 
     describe('render given number of options', () => {
