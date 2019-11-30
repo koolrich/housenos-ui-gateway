@@ -1,0 +1,14 @@
+.searchContainer {
+    background-image: url('images/searchBackground.jpg');
+    background-repeat:  center repeat-x;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 40px 0;
+}
+.mainHeading {
+    padding-top: 20px;
+    
+}
+.secondaryHeading {
+    padding-top: 10px;
+}
