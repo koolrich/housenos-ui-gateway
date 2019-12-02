@@ -9,8 +9,8 @@ function PropertySearch(props) {
         <div className="container">
             <div className="searchContainer">
                 <div className="text-center">
-                    <h1 className="mainHeading">Reimagine home <Badge color="danger">New</Badge></h1>
-                    <h3 className="secondaryHeading">Let's help you find your dream home</h3>
+                    <h1>Reimagine home <Badge color="danger">New</Badge></h1>
+                    <h3>Let's help you find your dream home</h3>
                 </div>
                 <Row className="pt-5">
                     <Col m="12" md={{ size: 6, offset: 3 }}>
