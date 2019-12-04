@@ -1,8 +1,8 @@
 import React from 'react';
 import './index.css';
 import { Badge } from 'reactstrap';
-import { Form, Input } from 'reactstrap';
-import { Container, Row, Col } from 'reactstrap';
+import {InputGroup, InputGroupAddon, Button, Form, Input } from 'reactstrap';
+import { Container, Row, Col} from 'reactstrap';
 
 function PropertySearch(props) {
     return(
@@ -15,7 +15,12 @@ function PropertySearch(props) {
                 <Row className="pt-5">
                     <Col m="12" md={{ size: 6, offset: 3 }}>
                         <Form>
-                            <Input placeholder="Enter an address, town or city" bsSize="default" />
+                            <InputGroup>
+                                <Input placeholder="Enter an address, town or city"/>
+                                <InputGroupAddon addonType="append">
+                                <Button color="secondary">Go!</Button>
+                                </InputGroupAddon>
+                            </InputGroup>
                         </Form>
                     </Col>      
                 </Row>  
