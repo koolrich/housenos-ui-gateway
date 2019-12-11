@@ -17,18 +17,6 @@ import AlertMessage from '../../util/components/Alert';
 import useForm from '../../util/hooks/Forms';
 import { doSignup, doReset } from './SignupActions';
 
-const mapDispatchToProps = dispatch => ({
-    doSignup: (user) => dispatch(doSignup(user)),
-    doReset: () => dispatch(doReset())
-});
-
-function mapStateToProps(state) {
-    return {
-        formErrorMessage: state.signup.formErrorMessage,
-        signupSuccess: state.signup.signupSuccess
-    };
-}
-
 const Signup = (props) => {
     const formState = {
         firstName: {
@@ -231,6 +219,18 @@ const Signup = (props) => {
             </Container>
         </>
     );
+}
+
+const mapDispatchToProps = dispatch => ({
+    doSignup: (user) => dispatch(doSignup(user)),
+    doReset: () => dispatch(doReset())
+});
+
+function mapStateToProps(state) {
+    return {
+        formErrorMessage: state.signup.formErrorMessage,
+        signupSuccess: state.signup.signupSuccess
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);
