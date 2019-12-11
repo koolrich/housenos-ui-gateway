@@ -1,30 +1,27 @@
 import React from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faUser, faAt, faLock, faPhone, faEnvelope, faAddressCard, faBriefcase, faCity,
-  faHome, faUniversity, faSearch, faStreetView, faCog, faPowerOff, faIdCard, faSignInAlt,
-  faUserPlus
-} from '@fortawesome/free-solid-svg-icons'
 import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Store } from '../store/Store';
-import { Registration } from '../features/Registration';
-import { Layout } from '../features/Layout';
-import { Login } from '../features/Login';
-
-library.add(faUser, faAt, faLock, faPhone, faEnvelope, faAddressCard, faBriefcase, faCity, faHome,
-  faUniversity, faSearch, faStreetView, faCog, faPowerOff, faIdCard, faSignInAlt, faUserPlus)
+import Signup from '../features/Signup/Signup';
+import SignupSuccess from '../features/Signup/SignupSuccess';
+import Layout from '../features/Layout/Layout';
+import Login from '../features/Login/Login';
+import Activate from '../features/Account/Activate/Activate';
+import {LoadIcons} from '../config/IconLoader';
 
 const store = Store();
+LoadIcons();
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-        <Route path="/register" component={Registration} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/signup-success" component={SignupSuccess} />
           <Route path="/login" component={Login} />
-          <Route path="/" component={Layout} />
+          <Route path="/activate/:key?" component={Activate} />
+          <Route path="/" exact component={Layout} />
         </Switch>
       </BrowserRouter>
     </Provider>
