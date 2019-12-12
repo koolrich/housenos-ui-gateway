@@ -3,18 +3,18 @@ export const validate = (inputValue, rules) => {
 
     for (let rule in rules) {
         switch (rule) {
-            case 'isRequired': {
+            case 'isRequired':
                 if (!requiredValidator(inputValue)) {
                     return 'This field is required';
                 }
-            }
+
                 break;
 
-            case 'isEmail': {
+            case 'isEmail':
                 if (!emailValidator(inputValue)) {
                     return 'Please enter a valid email';
                 }
-            }
+
                 break;
 
             default: {
@@ -51,9 +51,12 @@ export const validateFormField = (formField) => {
 export const validateForm = (formFields) => {
     let isFormValid = true;
     for (let field in formFields) {
-        const validatedFormField = validateFormField(formFields[field]);
-        formFields[field] = validatedFormField;
-        isFormValid = formFields[field].valid && isFormValid;
+        let formField = formFields[field];
+        if (!formField.hide) {
+            const validatedFormField = validateFormField(formField);
+            formField = validatedFormField;
+            isFormValid = formField.valid && isFormValid;
+        }
     }
     return [isFormValid, formFields];
 }

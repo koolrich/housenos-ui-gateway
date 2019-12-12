@@ -7,7 +7,7 @@ import { MenuItem } from './MenuItem';
 
 const accountsMenuAnonymous = (
     <>
-        <MenuItem to='/register' icon='user-plus' title='Sign up' />
+        <MenuItem to='/signup' icon='user-plus' title='Sign up' />
         <MenuItem to='/login' icon='sign-in-alt' title='Login' />
     </>
 );
@@ -39,7 +39,7 @@ function getInitials(user) {
     if (user.firstName && user.lastName) {
         return user.firstName.charAt(0) + user.lastName.charAt(0);
     }
-    return user.email.charAt(0);
+    return user.sub.charAt(0).toUpperCase(); //Sub short for subject is the user's email from JWT payload
 }
 
 export const AccountMenu = ({ isAuthenticated = false, user }) => (

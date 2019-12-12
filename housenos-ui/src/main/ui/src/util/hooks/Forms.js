@@ -10,7 +10,6 @@ const useForm = (callback, initialState) => {
 
         const updatedFormFields = { ...formFields };
         const [isFormValid, validatedFormFields] = validateForm(updatedFormFields);
-
         setFormFields(validatedFormFields);
 
         if (isFormValid) {
@@ -21,7 +20,7 @@ const useForm = (callback, initialState) => {
     const handleChange = (event) => {
         const name = event.target.name;
 
-        const updatedFormFields = {...formFields};
+        const updatedFormFields = { ...formFields };
 
         const updatedFormField = updatedFormFields[name];
         updatedFormField.value = event.target.value;
@@ -32,7 +31,7 @@ const useForm = (callback, initialState) => {
         setFormFields(updatedFormFields);
     };
     return {
-        formFields, handleChange, handleSubmit
+        formFields, setFormFields, handleChange, handleSubmit
     };
 }
 

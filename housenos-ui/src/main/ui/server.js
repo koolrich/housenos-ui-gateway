@@ -25,6 +25,18 @@ function isAuthenticated({ username, password }) {
     return userdb.users.findIndex(user => user.username === username && user.password === password) !== -1
 }
 
+server.post('/housenos-api/signup', (req, res) => {
+    console.log("Register endpoint called; request body:");
+    console.log(req.body);
+    res.status(201).json({"status":"201"});
+})
+
+server.get('/housenos-api/activate*', (req, res) => {
+    console.log("Activate endpoint called; request body:");
+    console.log(req.body);
+    res.status(200).json({"status":"200"});
+})
+
 // Login to one of the users from ./users.json
 server.post('/housenos-api/login', (req, res) => {
     console.log("login endpoint called; request body:");
