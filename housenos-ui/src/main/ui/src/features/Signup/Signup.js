@@ -81,6 +81,10 @@ const Signup = (props) => {
 
     useEffect(() => {
         document.body.style.backgroundColor = "#0747A6";
+
+        return () => {
+            props.doReset();
+        };  
     }, []);
 
     const toggleDisplayRoleFields = (event) => {
