@@ -3,6 +3,7 @@ import './index.css';
 import { Badge } from 'reactstrap';
 import {InputGroup, InputGroupAddon, Button, Form, Input } from 'reactstrap';
 import { Container, Row, Col} from 'reactstrap';
+import {PropertyCard} from './componentes/propertyCard/propertyCard.js';
 
 function PropertySearch(props) {
     return(
@@ -24,7 +25,16 @@ function PropertySearch(props) {
                         </Form>
                     </Col>      
                 </Row>  
-            </div>        
+            </div> 
+
+
+             <Container>
+            <Row>
+                <Col>
+                    <PropertyCard />
+                </Col>
+            </Row>       
+        </Container>       
         </div>
         
     )
