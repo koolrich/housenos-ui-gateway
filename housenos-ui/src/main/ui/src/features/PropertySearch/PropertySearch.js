@@ -3,7 +3,7 @@ import './index.css';
 import { Badge } from 'reactstrap';
 import {InputGroup, InputGroupAddon, Button, Form, Input } from 'reactstrap';
 import { Container, Row, Col} from 'reactstrap';
-import {PropertyCard} from './componentes/propertyCard/propertyCard.js';
+import {PropertyCard} from 'PropertyCard';
 
 function PropertySearch(props) {
     return(
