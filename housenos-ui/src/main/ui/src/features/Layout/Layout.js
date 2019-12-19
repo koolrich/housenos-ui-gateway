@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import Header from './Header/Header';
 import { PropertySearch } from '../PropertySearch';
 import { MyProperties } from '../MyProperties';
+import PropertyListing from '../MyProperties/PropertyListing';
 import AuthenticatedRoute from '../../util/security/AuthenticatedRoute';
 import './index.css';
 
@@ -15,11 +16,12 @@ function Layout(props) {
 
     return (
         <>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={PropertySearch} />
-          <AuthenticatedRoute path="/properties" component={MyProperties} />
-        </Switch>
+            <Header />
+            <Switch>
+                <Route exact path="/" component={PropertySearch} />
+                <AuthenticatedRoute exact path="/properties" component={MyProperties} />
+                <Route exact path="/properties/listing" component={PropertyListing} />
+            </Switch>
         </>
     );
 }

@@ -21,7 +21,7 @@ function App() {
           <Route path="/signup-success" component={SignupSuccess} />
           <Route path="/login" component={Login} />
           <Route path="/activate/:key?" component={Activate} />
-          <Route path="/" exact component={Layout} />
+          <Route path="/" component={Layout} />
         </Switch>
       </BrowserRouter>
     </Provider>

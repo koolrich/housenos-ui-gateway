@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, InputGroup, InputGroupAddon, FormGroup, FormFeedback } from 'reactstrap';
+import { Input, InputGroup, InputGroupAddon, FormGroup, FormFeedback, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
@@ -20,6 +20,7 @@ const Select = (props) => {
     return (
         <React.Fragment>
             <FormGroup>
+            <Label className="mb-0" for={props.name} hidden={props.hideLabel}>{props.title}</Label>
                 {props.withIcon === true ?
                     <InputGroup>
                         <InputGroupAddon className="input-group-text" addonType={props.addonType}><FontAwesomeIcon icon={props.icon} /></InputGroupAddon>
@@ -36,13 +37,14 @@ const Select = (props) => {
 }
 
 Select.propTypes = {
-    withIcon: PropTypes.bool.isRequired,
     addonType: PropTypes.oneOf(['prepend', 'append']),
     icon: PropTypes.string,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
+    title: PropTypes.string,
+    hideLabel: PropTypes.bool.isRequired,
     valid: PropTypes.bool,
     errorMessage: PropTypes.string
 }

@@ -6,19 +6,18 @@ import PropTypes from 'prop-types';
 function renderInput(props) {
     return (
         <React.Fragment>
-            <Input type="email" name={props.name} id={props.name} value={props.value} placeholder={props.placeholder}
+            <Input type="number" name={props.name} id={props.name} value={props.value} placeholder={props.placeholder}
                 onChange={props.onChange} invalid={props.valid === false ? true : false} />
             <FormFeedback>{props.errorMessage}</FormFeedback>
         </React.Fragment>
     );
 }
 
-const Email = (props) => {
+const Number = (props) => {
     return (
         <React.Fragment>
             <FormGroup>
                 <Label className="mb-0" for={props.name} hidden={props.hideLabel}>{props.title}</Label>
-
                 {props.icon ?
                     <InputGroup>
                         <InputGroupAddon className="input-group-text" addonType={props.addonType}>
@@ -36,7 +35,7 @@ const Email = (props) => {
     );
 }
 
-Email.propTypes = {
+Text.propTypes = {
     addonType: PropTypes.oneOf(['prepend', 'append']),
     icon: PropTypes.string,
     value: PropTypes.string.isRequired,
@@ -49,4 +48,4 @@ Email.propTypes = {
     errorMessage: PropTypes.string
 }
 
-export default Email;
+export default Number;

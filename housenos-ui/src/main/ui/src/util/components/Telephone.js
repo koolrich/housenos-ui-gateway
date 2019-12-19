@@ -17,7 +17,7 @@ const Telephone = (props) => {
     return (
         <React.Fragment>
             <FormGroup>
-                <Label for={props.name} hidden={props.hideLabel}>{props.title}</Label>
+                <Label className="mb-0" for={props.name} hidden={props.hideLabel}>{props.title}</Label>
 
                 {props.icon ?
                     <InputGroup>

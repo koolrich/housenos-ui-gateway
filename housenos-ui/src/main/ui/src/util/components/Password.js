@@ -17,7 +17,7 @@ const Password = (props) => {
     return (
         <React.Fragment>
             <FormGroup>
-                <Label for={props.name} hidden={props.hideLabel}>{props.title}</Label>
+                <Label className="font-weight-bold mb-0" for={props.name} hidden={props.hideLabel}>{props.title}</Label>
 
                 {props.icon ?
                     <InputGroup>

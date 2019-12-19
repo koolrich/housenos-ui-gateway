@@ -17,7 +17,7 @@ export const MenuItem = ({ to, icon, title, mainMenu = true }) => (
  */
 const mainMenuItem = (to, icon, title) => (
     <NavItem>
-        <NavLink tag={Link} className="nav-link" to={to}>
+        <NavLink tag={Link} to={to}>
             {icon && <FontAwesomeIcon icon={icon} className="fa-fw" />}
             <span> {title}</span>
         </NavLink>
