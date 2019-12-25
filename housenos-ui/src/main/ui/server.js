@@ -67,6 +67,12 @@ server.post('/housenos-api/login', (req, res) => {
     })
 })
 
+server.post('/housenos-api/properties', (req, res) => {
+    console.log("Register endpoint called; request body:");
+    console.log(req.body);
+    res.status(201).json(req.body);
+})
+
 server.use(router)
 
 server.listen(3001, () => {

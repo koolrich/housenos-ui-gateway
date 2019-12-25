@@ -20,6 +20,7 @@ function Layout(props) {
             <Switch>
                 <Route exact path="/" component={PropertySearch} />
                 <AuthenticatedRoute exact path="/properties" component={MyProperties} />
+                <AuthenticatedRoute exact path="/properties/:propertyId/view" component={MyProperties} />
                 <Route exact path="/properties/listing" component={PropertyListing} />
             </Switch>
         </>

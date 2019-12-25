@@ -71,7 +71,7 @@ const Signup = (props) => {
             lastName: formFields.lastName.value,
             role: formFields.role.value
         }
-        console.log("User object: " + JSON.stringify(user));
+
         props.doSignup(user);
     }
 
